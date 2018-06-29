@@ -1,0 +1,36 @@
+:root {
+    --gridSize: 3;
+    --gridHeight: 50px;
+}
+
+#fk-grid-wrapper__container {
+    display: grid;
+    grid-template-rows: repeat(var(--gridSize), var(--gridHeight));
+    grid-template-columns: repeat(var(--gridSize), auto);
+    grid-row-gap: 10px;
+}
+
+#fk-grid-wrapper__container :hover{
+     background-color: red;
+ }
+
+.fk-grid-cell {
+    cursor: pointer;
+    justify-self: center;
+    align-self: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.fk-grid-cell.glow {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #fff;
+    }
+    100% {
+        background-color: yellow;
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "fk_board_game",
+  "version": "1.0.0",
+  "description": "board game interview question",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jeevan-Kishore/fk_board_game.git"
+  },
+  "keywords": [
+    "interview",
+    "flipkart"
+  ],
+  "author": "jeevan kishore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jeevan-Kishore/fk_board_game/issues"
+  },
+  "homepage": "https://github.com/Jeevan-Kishore/fk_board_game#readme"
+}
