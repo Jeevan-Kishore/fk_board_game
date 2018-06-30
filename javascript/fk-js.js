@@ -6,18 +6,16 @@ class GridController {
       scoreBoundary,
       levels,
       score: 0,
-      randomCell: 0,
+      currentLevelScore: 0,
+      randomCell: -1,
       gridSize: 3,
       currentGlowTimeout: 0,
+      levelActiveTimeout: 0,
       currentLevel: 0,
     });
   }
 
   formGrid(rows = 3, cols = 3) {
-    if(this.currentLevel > this.levels){
-      alert('You won!');
-      return false;
-    }
     const totalCells = rows * cols;
     this.randomCell = this.selectRandomCell(0, totalCells);
     document.getElementById('fk-grid-wrapper__container').innerHTML = this.getTemplate(totalCells, this.randomCell);
@@ -43,9 +41,13 @@ class GridController {
     if( className && className.indexOf('glow') > -1 ) {
       this.incrementScore();
       this.formGrid(this.gridSize,this.gridSize);
+      this.currentLevelScore = this.currentLevelScore + 1;
+      console.log(`score : ${this.currentLevelScore}`);
     } else {
       this.decrementScore();
+      this.currentLevelScore = this.currentLevelScore - 1;
       this.formGrid(this.gridSize,this.gridSize);
+      console.log(`score : ${this.currentLevelScore}`);
     }
   }
 
@@ -62,15 +64,24 @@ class GridController {
   }
 
   handleLevelTimer() {
-    if(this.score < this.scoreBoundary){
-      alert('stop playing bitch, GAME OVER!');
-    } else {
+    const overlay = document.getElementById('overlay');
+    if((this.currentLevelScore < this.scoreBoundary) && (this.currentLevel < this.levels)){
+      clearTimeout(this.currentGlowTimeout);
+      overlay.classList.add('show');
+      alert(`stop playing bitch, GAME OVER!, score : ${this.score}`);
+    } else if( (this.currentLevelScore > this.scoreBoundary) && (this.currentLevel < this.levels )){
       alert('Moving to next level');
+      this.currentLevelScore = 0;
       this.currentLevel = this.currentLevel + 1;
       this.gridSize = this.gridSize + 1;
       document.documentElement.style.setProperty("--gridSize", this.gridSize);
       this.formGrid(this.gridSize,this.gridSize);
-      setTimeout(() => this.handleLevelTimer(), this.levelActiveTime);
+      this.levelActiveTimeout = setTimeout(() => this.handleLevelTimer(), this.levelActiveTime);
+    } else {
+      overlay.classList.add('show');
+      clearTimeout(this.currentGlowTimeout);
+      clearTimeout(this.levelActiveTimeout);
+      alert(`You won! Score: ${this.score}`);
     }
   }
 
